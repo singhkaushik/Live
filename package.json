@@ -9,8 +9,7 @@
         "start-dev": "nodemon app/src/Server.js",
         "debug": "DEBUG='mediasoup*' node app/src/Server.js",
         "compile": "npx browserify public/sfu/MediasoupClientCompile.js -o public/sfu/MediasoupClient.js",
-        "lint": "npx prettier --write .",
-        
+        "lint": "npx prettier --write ."
     },
     "repository": {
         "type": "git",
@@ -39,7 +38,7 @@
         "ftp": "^0.3.10",
         "httpolyglot": "0.1.2",
         "localtunnel": "^2.0.2",
-        "mediasoup": "3.13.7",
+      "mediasoup": "^3.13.7",
         "mediasoup-client": "3.7.0",
         "mysql": "^2.18.1",
         "ngrok": "^4.3.3",
@@ -54,6 +53,6 @@
     "devDependencies": {
         "node-fetch": "^3.3.2",
         "nodemon": "^3.0.2",
-        "prettier": "3.1.0"
+        "prettier": "2.4.1"
     }
 }
