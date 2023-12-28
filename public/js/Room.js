@@ -2,6 +2,19 @@
 
 if (location.href.substr(0, 5) !== 'https') location.href = 'https' + location.href.substr(4, location.href.length - 4);
 
+/**
+ * MiroTalk SFU - Room component
+ *
+ * @link    GitHub: https://github.com/miroslavpejic85/mirotalksfu
+ * @link    Official Live demo: https://sfu.mirotalk.com
+ * @license For open source use: AGPLv3
+ * @license For commercial or closed source, contact us at license.mirotalk@gmail.com or purchase directly via CodeCanyon
+ * @license CodeCanyon: https://codecanyon.net/item/mirotalk-sfu-webrtc-realtime-video-conferences/40769970
+ * @author  Miroslav Pejic - miroslav.pejic.85@gmail.com
+ * @version 1.3.3
+ *
+ */
+
 // ####################################################
 // STATIC SETTINGS
 // ####################################################
@@ -725,7 +738,7 @@ function whoAreYou() {
         allowOutsideClick: false,
         allowEscapeKey: false,
         background: swalBackground,
-        title: 'Live Classes',
+        title: 'MiroTalk SFU',
         input: 'text',
         inputPlaceholder: 'Enter your name',
         inputAttributes: { maxlength: 32 },
@@ -948,7 +961,7 @@ function shareRoomByEmail() {
             const selectedDateTime = document.getElementById('datetimePicker').value;
             const newLine = '%0D%0A%0D%0A';
             const email = '';
-            const emailSubject = `Please join our Live Classes Video Chat Meeting`;
+            const emailSubject = `Please join our MiroTalk SFU Video Chat Meeting`;
             const emailBody = `The meeting is scheduled at: ${newLine} DateTime: ${selectedDateTime} ${newLine} Click to join: ${RoomURL} ${newLine}`;
             document.location = 'mailto:' + email + '?subject=' + emailSubject + '&body=' + emailBody;
         },
@@ -3022,7 +3035,7 @@ async function saveRoomPeers() {
 
 async function getRoomParticipants() {
     const peers = await getRoomPeers();
-    const lists = await getParticipantsList(peers);
+    const lists = getParticipantsList(peers);
     participantsCount = peers.size;
     participantsList.innerHTML = lists;
     refreshParticipantsCount(participantsCount, false);
@@ -3030,7 +3043,7 @@ async function getRoomParticipants() {
     console.log('*** Refresh Chat participant lists ***');
 }
 
-async function getParticipantsList(peers) {
+function getParticipantsList(peers) {
     // CHAT-GPT
     let li = `
     <li 
@@ -3452,7 +3465,7 @@ function showAbout() {
                 id="support-button" 
                 data-umami-event="Support button" 
                 class="pulsate" 
-                onclick="window.open('#')">
+                onclick="window.open('https://codecanyon.net/user/miroslavpejic85')">
                 <i class="fas fa-heart"></i> 
                 Support
             </button>
@@ -3460,15 +3473,15 @@ function showAbout() {
             Author: <a 
                 id="linkedin-button" 
                 data-umami-event="Linkedin button" 
-                href="#" target="_blank"> 
-                Live Classes
+                href="https://www.linkedin.com/in/miroslav-pejic-976a07101/" target="_blank"> 
+                Miroslav Pejic
             </a>
             <br /><br />
             Email:<a 
                 id="email-button" 
                 data-umami-event="Email button" 
-                href="mailto:doxytest@gmail.com?subject=Live Classes SFU info"> 
-                doxytest@gmail.com
+                href="mailto:miroslav.pejic.85@gmail.com?subject=MiroTalk SFU info"> 
+                miroslav.pejic.85@gmail.com
             </a>
         </div>
         `,

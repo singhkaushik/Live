@@ -46,8 +46,8 @@ module.exports = {
         user_auth: false,
         users: [
             {
-                username: '6387927342',
-                password: '123456',
+                username: 'username',
+                password: 'password',
             },
             {
                 username: 'username2',
@@ -62,8 +62,8 @@ module.exports = {
                 By default, the presenter is identified as the first participant to join the room, distinguished by their username and UUID. 
                 Additional layers can be added to specify valid presenters and co-presenters by setting designated usernames.
             */
-            'Live Classes',
-            
+            'Miroslav Pejic',
+            'MiroTalk SFU',
         ],
         join_first: true, // Set to true for traditional behavior, false to prioritize presenters
     },
@@ -82,7 +82,7 @@ module.exports = {
     },
     api: {
         // app/api
-        keySecret: 'liveclasses_default_secret',
+        keySecret: 'mirotalksfu_default_secret',
     },
     sentry: {
         /*
@@ -113,10 +113,10 @@ module.exports = {
             2. Create your account
             3. Generate your APIKey https://platform.openai.com/account/api-keys
         */
-        enabled: true,
+        enabled: false,
         basePath: 'https://api.openai.com/v1/',
-        apiKey: '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',
-        model: 'gpt-3.5-turbo',
+        apiKey: '',
+        model: 'text-davinci-003',
         max_tokens: 1000,
         temperature: 0,
     },
@@ -150,10 +150,13 @@ module.exports = {
         url: '',
     },
     stats: {
-    //    for testing purpose make it comment
-        // enabled: true,
-        // src: 'https://stats.mirotalk.com/script.js',
-        // id: '41d26670-f275-45bb-af82-3ce91fe57756',
+        /*
+            Umami: https://github.com/umami-software/umami
+            We use Umami to track aggregated usage statistics in order to improve our service. 
+        */
+        enabled: true,
+        src: 'https://stats.mirotalk.com/script.js',
+        id: '41d26670-f275-45bb-af82-3ce91fe57756',
     },
     mediasoup: {
         // Worker settings

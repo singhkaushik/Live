@@ -6,7 +6,44 @@
 ███████ █████   ██████  ██    ██ █████   ██████  
      ██ ██      ██   ██  ██  ██  ██      ██   ██ 
 ███████ ███████ ██   ██   ████   ███████ ██   ██                                           
+
+dependencies: {
+    @sentry/node            : https://www.npmjs.com/package/@sentry/node
+    @sentry/integrations    : https://www.npmjs.com/package/@sentry/integrations
+    axios                   : https://www.npmjs.com/package/axios
+    body-parser             : https://www.npmjs.com/package/body-parser
+    compression             : https://www.npmjs.com/package/compression
+    colors                  : https://www.npmjs.com/package/colors
+    cors                    : https://www.npmjs.com/package/cors
+    crypto-js               : https://www.npmjs.com/package/crypto-js
+    express                 : https://www.npmjs.com/package/express
+    httpolyglot             : https://www.npmjs.com/package/httpolyglot
+    mediasoup               : https://www.npmjs.com/package/mediasoup
+    mediasoup-client        : https://www.npmjs.com/package/mediasoup-client
+    ngrok                   : https://www.npmjs.com/package/ngrok
+    openai                  : https://www.npmjs.com/package/openai
+    qs                      : https://www.npmjs.com/package/qs
+    socket.io               : https://www.npmjs.com/package/socket.io
+    swagger-ui-express      : https://www.npmjs.com/package/swagger-ui-express
+    uuid                    : https://www.npmjs.com/package/uuid
+    xss                     : https://www.npmjs.com/package/xss
+    yamljs                  : https://www.npmjs.com/package/yamljs
+}
 */
+
+/**
+ * MiroTalk SFU - Server component
+ *
+ * @link    GitHub: https://github.com/miroslavpejic85/mirotalksfu
+ * @link    Official Live demo: https://sfu.mirotalk.com
+ * @license For open source use: AGPLv3
+ * @license For commercial or closed source, contact us at license.mirotalk@gmail.com or purchase directly via CodeCanyon
+ * @license CodeCanyon: https://codecanyon.net/item/mirotalk-sfu-webrtc-realtime-video-conferences/40769970
+ * @author  Miroslav Pejic - miroslav.pejic.85@gmail.com
+ * @version 1.3.3
+ *
+ */
+
 const express = require('express');
 const cors = require('cors');
 const compression = require('compression');
@@ -31,7 +68,6 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = yamlJS.load(path.join(__dirname + '/../api/swagger.yaml'));
 const Sentry = require('@sentry/node');
 const { CaptureConsole } = require('@sentry/integrations');
-const OpenAI = require('openai');
 
 // Slack API
 const CryptoJS = require('crypto-js');
@@ -90,10 +126,9 @@ if (sentryEnabled) {
 
 // Stats
 const defaultStats = {
-    // for testing purpose comment this
-    // enabled: true,
-    // src: 'https://stats.mirotalk.com/script.js',
-    // id: '41d26670-f275-45bb-af82-3ce91fe57756',
+    enabled: true,
+    src: 'https://stats.mirotalk.com/script.js',
+    id: '41d26670-f275-45bb-af82-3ce91fe57756',
 };
 
 // OpenAI/ChatGPT
@@ -364,7 +399,7 @@ function startServer() {
         let authorization = req.headers.authorization;
         let api = new ServerApi(host, authorization);
         if (!api.isAuthorized()) {
-            log.debug('Live Classes get meeting - Unauthorized', {
+            log.debug('MiroTalk get meeting - Unauthorized', {
                 header: req.headers,
                 body: req.body,
             });
@@ -375,7 +410,7 @@ function startServer() {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ meeting: meetingURL }));
         // log.debug the output if all done
-        log.debug('Live Classes get meeting - Authorized', {
+        log.debug('MiroTalk get meeting - Authorized', {
             header: req.headers,
             body: req.body,
             meeting: meetingURL,
@@ -389,7 +424,7 @@ function startServer() {
         let authorization = req.headers.authorization;
         let api = new ServerApi(host, authorization);
         if (!api.isAuthorized()) {
-            log.debug('Live Classes get join - Unauthorized', {
+            log.debug('MiroTalk get join - Unauthorized', {
                 header: req.headers,
                 body: req.body,
             });
@@ -400,7 +435,7 @@ function startServer() {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ join: joinURL }));
         // log.debug the output if all done
-        log.debug('Live Classes get join - Authorized', {
+        log.debug('MiroTalk get join - Authorized', {
             header: req.headers,
             body: req.body,
             join: joinURL,
@@ -727,7 +762,7 @@ function startServer() {
 
             log.debug('Peer action', data);
 
-            const presenterActions = ['mute', 'hide', 'eject'];
+            const presenterActions = ['mute', 'unmute', 'hide', 'unhide', 'stop', 'start', 'eject'];
             if (presenterActions.some((v) => data.action === v)) {
                 const isPresenter = await isPeerPresenter(
                     socket.room_id,
@@ -1200,7 +1235,7 @@ function startServer() {
 
         socket.on('getChatGPT', async ({ time, room, name, prompt }, cb) => {
             if (!roomList.has(socket.room_id)) return;
-            // if (!config.chatGPT.enabled) return cb('ChatGPT seems disabled, try later!');
+            if (!config.chatGPT.enabled) return cb('ChatGPT seems disabled, try later!');
             try {
                 // https://platform.openai.com/docs/api-reference/completions/create
                 const completion = await chatGPT.completions.create({

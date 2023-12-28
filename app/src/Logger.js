@@ -13,7 +13,7 @@ const options = {
     colors: true,
 };
 module.exports = class Logger {
-    constructor(appName = 'LiveClasses') {
+    constructor(appName = 'miroTalkSfu') {
         this.appName = colors.yellow(appName);
         this.debugOn = config.console.debug;
         this.timeStart = Date.now();

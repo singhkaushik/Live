@@ -128,6 +128,7 @@ function handleRules(isPresenter) {
         isBroadcastingEnabled = lsSettings.broadcasting;
         switchBroadcasting.checked = isBroadcastingEnabled;
         rc.roomAction('broadcasting', true, false);
+        if (isBroadcastingEnabled) rc.toggleRoomBroadcasting();
         // Room lobby
         isLobbyEnabled = lsSettings.lobby;
         switchLobby.checked = isLobbyEnabled;
@@ -179,7 +180,7 @@ function handleRulesBroadcasting() {
     BUTTONS.main.startVideoButton = false;
     BUTTONS.main.startScreenButton = false;
     BUTTONS.main.swapCameraButton = false;
-    BUTTONS.main.raiseHandButton = false;
+    //BUTTONS.main.raiseHandButton = false;
     BUTTONS.main.whiteboardButton = false;
     //BUTTONS.main.emojiRoomButton = false,
     BUTTONS.main.transcriptionButton = false;
@@ -207,7 +208,7 @@ function handleRulesBroadcasting() {
     elemDisplay('startScreenButton', false);
     elemDisplay('stopScreenButton', false);
     elemDisplay('swapCameraButton', false);
-    elemDisplay('raiseHandButton', false);
+    //elemDisplay('raiseHandButton', false);
     elemDisplay('whiteboardButton', false);
     //elemDisplay('emojiRoomButton', false);
     elemDisplay('transcriptionButton', false);
